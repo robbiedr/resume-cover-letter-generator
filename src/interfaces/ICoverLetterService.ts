@@ -3,5 +3,5 @@ export interface ICoverLetterService {
     name: string,
     position: string,
     company: string
-  ): Promise<string>;
+  ): Promise<{ data: string; fromCache: boolean; cacheDate?: Date }>;
 }
