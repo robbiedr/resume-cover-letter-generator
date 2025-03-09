@@ -1,7 +1,7 @@
 export interface IResumeService {
-  generateResume(
+  generateAIResume(
     name: string,
     title: string,
     experience: string[]
-  ): Promise<string>;
+  ): Promise<{ data: string; fromCache: boolean; cacheDate?: Date }>;
 }

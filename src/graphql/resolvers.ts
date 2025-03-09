@@ -4,10 +4,6 @@ import { CoverLetterService } from "../services/CoverLetterService";
 const resumeService = new ResumeService();
 const coverLetterService = new CoverLetterService();
 
-import { OpenAIService } from "../services/OpenAIService";
-
-const openAIService = new OpenAIService();
-
 export const resolvers = {
   Query: {
     hello: () => "Hello from GraphQL!",
@@ -15,16 +11,24 @@ export const resolvers = {
   Mutation: {
     generateAIResume: async (
       _: any,
-      args: { name: string; title: string; experience: string[] }
+      {
+        name,
+        title,
+        experience,
+      }: { name: string; title: string; experience: string[] }
     ) => {
-      const prompt = `Generate a professional resume for ${args.name}, a ${
-        args.title
-      }. Work experience includes: ${args.experience.join(", ")}.`;
-      return await openAIService.generateText(prompt);
+      return await resumeService.generateAIResume(name, title, experience);
     },
+
     generateAICoverLetter: async (
       _: any,
-      args: {
+      {
+        name,
+        position,
+        company,
+        skills,
+        experience,
+      }: {
         name: string;
         position: string;
         company: string;
@@ -32,16 +36,13 @@ export const resolvers = {
         experience?: number;
       }
     ) => {
-      const skillsText = args.skills?.length
-        ? ` They have skills in ${args.skills.join(", ")}.`
-        : "";
-      const experienceText = args.experience
-        ? ` They have ${args.experience} years of experience.`
-        : "";
-
-      const prompt = `Write a personalized cover letter for ${args.name} applying for ${args.position} at ${args.company}.${skillsText}${experienceText}`;
-
-      return await openAIService.generateText(prompt);
+      return await coverLetterService.generateAICoverLetter(
+        name,
+        position,
+        company,
+        skills,
+        experience
+      );
     },
   },
 };
