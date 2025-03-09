@@ -4,7 +4,13 @@ export const typeDefs = `
   }
 
   type Mutation {
-    generateResume(name: String!, title: String!, experience: [String!]!): String
-    generateCoverLetter(name: String!, position: String!, company: String!): String
+    generateAIResume(name: String!, title: String!, experience: [String!]!): String
+    generateAICoverLetter(
+      name: String!,
+      position: String!,
+      company: String!,
+      skills: [String!],
+      experience: Int
+    ): String!
   }
 `;

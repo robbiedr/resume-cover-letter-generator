@@ -1,3 +1,7 @@
 export interface ICoverLetterService {
-  generateCoverLetter(name: string, position: string, company: string): string;
+  generateAICoverLetter(
+    name: string,
+    position: string,
+    company: string
+  ): Promise<string>;
 }
